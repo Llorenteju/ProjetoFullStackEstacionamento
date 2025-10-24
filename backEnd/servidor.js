@@ -37,7 +37,15 @@ app.get("/lerveiculos/:id", (req,res)=>{
 });
 
 app.patch("/atualizarpagamento/:id", (req,res) =>{
-    const veiculo = VEICULOS.find(x => {x.id === Number(req.params.id);})
+    const veiculo = VEICULOS.find(x => x.id === Number(req.params.id));
+
+    if(!veiculo) return res.status(404).json({erro:"Não encontrado"});
+
+    const {pago} = req.body;
+
+    if(pago !== undefined) veiculo.pago = pago;
+
+    res.json(veiculo);
 })
 
 
